@@ -45,7 +45,6 @@ function Navbar() {
           <span className="slogan">You define the goal, I make it happen.</span>
         </div>
         <ul className="nav-links">
-          <li><a href="#about">About Me</a></li>
           <li><a href="#skills">Skills</a></li>
           <li><a href="#education">Education</a></li>
           <li><a href="#projects">Projects</a></li>
