@@ -3,7 +3,19 @@
   background-color: var(--background-color);
   color: var(--text-color);
   padding: 4rem 1.5rem;
-  scroll-margin-top: 70px;
+  scroll-margin-top: 50px;
+}
+
+@media (min-width: 768px) {
+  .education {
+    scroll-margin-top: 80px;
+  }
+}
+
+@media (min-width: 1024px) {
+  .education {
+    scroll-margin-top: -1.5rem;
+  }
 }
 
 .education h2 {
@@ -64,13 +76,9 @@
   margin-right: 0.5rem;
 }
 
-@media (min-width: 768px) {
-  .education-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
+@media (max-width: 768px) {
   .education h2 {
-    font-size: 2.5rem;
+    text-align: center;
   }
 }
 

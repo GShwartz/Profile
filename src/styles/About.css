@@ -1,8 +1,8 @@
+/* About CSS */
 .about {
   background-color: var(--background-color);
   color: var(--text-color);
-  padding: 4rem 1.5rem;
-  scroll-margin-top: 100px;
+  scroll-margin-top: 120px; /* Scroll margin for desktop */
 }
 
 .about-wrapper {
@@ -10,7 +10,6 @@
   align-items: center;
   justify-content: space-between;
   max-width: 1000px;
-  margin: 0 auto;
   gap: 2rem;
 }
 
@@ -18,6 +17,7 @@
   flex: 1;
   display: flex;
   justify-content: flex-end;
+  align-items: center;
 }
 
 .profile-pic {
@@ -42,55 +42,32 @@
   position: relative;
 }
 
-/* Link hover effect for OMC GROUP with animated underline */
-.about-text a {
-  position: relative;
-  color: var(--link-color);
-  font-weight: bold;
-  text-decoration: none;
-  display: inline-block;
-  transition: color 0.3s ease;
-}
-
-.about-text a::after {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 0;
-  height: 2px;
-  background-color: var(--secondary-color);
-  transition: width 0.3s ease-in-out;
-}
-
-.about-text a:hover::after {
-  width: 100%;
-}
-
-.about-text a:hover {
-  color: var(--link-hover-color);
-}
-
-/* Responsive adjustments for mobile devices */
 @media (max-width: 768px) {
   .about-wrapper {
     flex-direction: column;
     text-align: center;
-    gap: 1.5rem;
+    gap: 1rem;
+    padding-bottom: 1.5rem;
+    scroll-margin-top: 150px; /* Adjust this to match the height of the fixed navbar */
   }
 
   .profile-wrapper {
     justify-content: center;
+    align-items: center;
+    margin-top: 0; /* Remove unnecessary margin */
   }
 
   .profile-pic {
     width: 150px;
     height: 150px;
+    margin-top: 0; /* Ensure there's no vertical margin pushing it down */
     margin-bottom: 1.5rem;
   }
 
   .about-text {
     text-align: center;
     font-size: 1rem;
+    margin-bottom: -6.5rem;
   }
 }
+

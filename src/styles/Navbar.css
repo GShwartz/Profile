@@ -85,6 +85,12 @@
     align-items: center;
   }
 
+  .logo {
+    align-items: center; /* Center the logo on mobile */
+    text-align: center;   /* Align text inside logo div */
+    margin-bottom: 1rem;  /* Optional: add space between logo and links */
+  }
+
   /* Modify nav-links to prevent column stacking */
   .nav-links {
     flex-direction: row; /* Force links to stay in a row */
