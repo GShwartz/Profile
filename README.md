@@ -16,7 +16,7 @@
 
 2. **Access** 
     <br />
-    Navigate to http://localhost:port in your browser.
+    Navigate to ```bash http://localhost:port ``` in your browser.
 
 ---
 ### Docker-Compose
