@@ -3,6 +3,8 @@ services:
     build: .
     ports:
       - "8080:80"
+    depends_on:
+      - nginx
 
   nginx:
     image: nginx:alpine
@@ -10,8 +12,6 @@ services:
       - ./build:/usr/share/nginx/html
     ports:
       - "8080:80"
-    depends_on:
-      - profile
     expose:
       - "80"
     command: ["nginx", "-g", "daemon off;"]
