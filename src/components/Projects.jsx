@@ -11,9 +11,9 @@ function Projects() {
       githubLink: 'https://github.com/GShwartz/Quick-AD',
     },
     {
-      title: 'Project Two',
-      description: 'Deployed a scalable Kubernetes cluster for microservices.',
-      githubLink: 'https://github.com/yourusername/project-two',
+      title: 'My Profile',
+      description: 'Deploy this WebApp',
+      githubLink: 'https://github.com/GShwartz/Profile',
     },
   ];
 
