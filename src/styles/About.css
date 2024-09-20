@@ -1,0 +1,96 @@
+.about {
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 4rem 1.5rem;
+  scroll-margin-top: 70px;
+}
+
+.about-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 2rem;
+}
+
+.profile-wrapper {
+  flex: 1;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.profile-pic {
+  width: 240px;
+  height: 240px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 4px solid var(--primary-color);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.about-text-wrapper {
+  flex: 2.5;
+}
+
+.about-text {
+  max-width: 600px;
+  text-align: left;
+  font-size: 1.125rem;
+  line-height: 1.7;
+  position: relative;
+}
+
+/* Link hover effect for OMC GROUP with animated underline */
+.about-text a {
+  position: relative;
+  color: var(--link-color);
+  font-weight: bold;
+  text-decoration: none;
+  display: inline-block;
+  transition: color 0.3s ease;
+}
+
+.about-text a::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 0;
+  height: 2px;
+  background-color: var(--secondary-color);
+  transition: width 0.3s ease-in-out;
+}
+
+.about-text a:hover::after {
+  width: 100%;
+}
+
+.about-text a:hover {
+  color: var(--link-hover-color);
+}
+
+/* Responsive adjustments for mobile devices */
+@media (max-width: 768px) {
+  .about-wrapper {
+    flex-direction: column;
+    text-align: center;
+    gap: 1.5rem;
+  }
+
+  .profile-wrapper {
+    justify-content: center;
+  }
+
+  .profile-pic {
+    width: 150px;
+    height: 150px;
+    margin-bottom: 1.5rem;
+  }
+
+  .about-text {
+    text-align: center;
+    font-size: 1rem;
+  }
+}

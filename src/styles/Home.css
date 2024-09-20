@@ -1,0 +1,38 @@
+.home {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+  color: #fff;
+  text-align: center;
+  scroll-margin-top: 95px;
+}
+
+.home-content {
+  max-width: 800px;
+}
+
+.home h1 {
+  font-size: 3rem;
+  margin-top: -15rem;
+  margin-bottom: 1rem;
+}
+
+.button {
+  margin-top: 1rem;
+}
+
+@media (max-width: 768px) {
+  .home h1 {
+    font-size: 2.5rem;
+  }
+
+  .home p {
+    font-size: 1rem;
+  }
+
+  .home-content {
+    margin-top: -1rem;
+  }
+}
