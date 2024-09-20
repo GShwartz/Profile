@@ -1,17 +1,29 @@
+version: '3.8'
+
 services:
-  profile:
-    build: .
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8080:80"
+    volumes:
+      - ./build:/app/build
     depends_on:
       - nginx
+    networks:
+      - app-network
 
   nginx:
     image: nginx:alpine
-    volumes:
-      - ./build:/usr/share/nginx/html
     ports:
       - "8080:80"
-    expose:
-      - "80"
+    volumes:
+      - ./build:/usr/share/nginx/html
+    networks:
+      - app-network
     command: ["nginx", "-g", "daemon off;"]
+
+networks:
+  app-network:
+    driver: bridge
