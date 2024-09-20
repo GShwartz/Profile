@@ -1,12 +1,12 @@
 
-## Deployment 
+# Deployment 
 **Clone the repository**:
    ```bash
         git clone https://github.com/GShwartz/Profile.git
         cd Profile
    ```
 
-# Dockerfile
+### Dockerfile
 1. **Build & Run**
    ```bash
         docker build -t <your-app-name> .
@@ -19,9 +19,8 @@
 
 <br />
 
-## Docker-Compose
-* You can change port 8080 to a port of your choosing.
-<br />
+### Docker-Compose
+* You can change port **8080** to a port of your choosing.
 
 1. **Build & Run**
     ```bash
