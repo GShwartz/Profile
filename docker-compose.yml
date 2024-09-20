@@ -11,6 +11,7 @@ services:
       - ./build:/app/build
     depends_on:
       - nginx
+    restart: unless-stopped
     networks:
       - gil-network
 
@@ -20,6 +21,7 @@ services:
       - "80:80"
     volumes:
       - ./build:/usr/share/nginx/html
+    restart: unless-stopped
     networks:
       - gil-network
     command: ["nginx", "-g", "daemon off;"]

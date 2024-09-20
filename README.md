@@ -11,7 +11,7 @@
 1. **Build & Run**
    ```bash
         docker build -t <your-app-name> .
-        docker run -d -p <your-port>:80 <your-app-name>
+        docker run -d -p <your-port>:80 --restart unless-stopped <your-app-name>
    ```
 
 2. **Access** 
