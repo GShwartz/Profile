@@ -25,8 +25,7 @@ Example:
     ```bash
         sed -i 's/8080:80/9090:80/' docker-compose.yml
     ```
-    <br />
-    This will change the port to 9090 so the navigation will look like this: '''http://localhost:9090'''
+    This will change the port to 9090 so the navigation will look like this: ```http://localhost:9090```
 
 1. **Build & Run**
     ```bash
