@@ -24,5 +24,5 @@
 
 1. **Build & Run**
     ```bash
-        docker-compose up --build
+        docker-compose up -d --build
     ```
