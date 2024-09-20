@@ -1,6 +1,5 @@
-### Welcome to my profile App!
-
-## Deployment with Docker
+---
+## Deployment with Dockerfile
 
 This application can be deployed using Docker by following these steps:
 
@@ -16,5 +15,9 @@ This application can be deployed using Docker by following these steps:
         docker run -p <your-port>:80 <your-app-name>
    ```
 
-3. **Access**
+3. **Access** 
+    <br />
     Navigate to http://localhost:<your-port> in your browser.
+
+<br />
+---
