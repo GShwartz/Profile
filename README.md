@@ -17,8 +17,6 @@
     <br />
     Navigate to http://localhost:port in your browser.
 
-<br />
-
 ### Docker-Compose
 * You can change port **8080** to a port of your choosing.
 
