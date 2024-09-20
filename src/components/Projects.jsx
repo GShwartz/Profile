@@ -11,8 +11,10 @@ function Projects() {
       githubLink: 'https://github.com/GShwartz/Quick-AD',
     },
     {
-      title: 'My Profile',
+      title: 'My Profile WebApp',
       description: 'Deploy this WebApp',
+      language: 'Docker | React | HTML | CSS',
+      year: '2024',
       githubLink: 'https://github.com/GShwartz/Profile',
     },
   ];
