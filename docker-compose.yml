@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  app:
+  gil:
     build:
       context: .
       dockerfile: Dockerfile
@@ -12,18 +12,18 @@ services:
     depends_on:
       - nginx
     networks:
-      - app-network
+      - gil-network
 
   nginx:
     image: nginx:alpine
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./build:/usr/share/nginx/html
     networks:
-      - app-network
+      - gil-network
     command: ["nginx", "-g", "daemon off;"]
 
 networks:
-  app-network:
+  gil-network:
     driver: bridge
