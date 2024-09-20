@@ -15,7 +15,7 @@
 
 2. **Access** 
     <br />
-    Navigate to http://localhost:<your-port> in your browser.
+    Navigate to http://localhost:port in your browser.
 
 <br />
 
