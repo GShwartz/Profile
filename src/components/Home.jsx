@@ -1,12 +1,13 @@
 import React from 'react';
 import '../styles/Home.css';
 
-function Home() {
+function Home({ onLetsGoClick }) {
   return (
     <section id="home" className="home">
       <div className="container home-content">
         <h1>Hi! 👋</h1>
-        <a href="#about" className="button">Lets Go</a>
+        {/* Clicking this button will reveal the Navbar */}
+        <a href="#about" className="button" onClick={onLetsGoClick}>Let's Go</a>
       </div>
     </section>
   );

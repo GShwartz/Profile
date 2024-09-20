@@ -23,6 +23,21 @@
   margin-top: 1rem;
 }
 
+.fade-out {
+  animation: fadeOut 1s forwards; /* Fade-out animation */
+}
+
+@keyframes fadeOut {
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(20px); /* Optional: Slide down slightly */
+  }
+}
+
 @media (max-width: 768px) {
   .home h1 {
     font-size: 2.5rem;

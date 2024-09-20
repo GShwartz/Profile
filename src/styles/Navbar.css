@@ -5,7 +5,23 @@
   z-index: 1000;
   padding: 1rem 2rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  transition: background-color 0.3s ease;
+  transition: all 0.5s ease; /* Apply transition to all properties */
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards; /* Use an animation for the fade-in effect */
+}
+
+/* Keyframes for the fade-in animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0; /* Start from hidden */
+    transform: translateY(-20px); /* Optional: slight slide-in from the top */
+  }
+  to {
+    opacity: 1; /* End fully visible */
+    transform: translateY(0);
+  }
 }
 
 .navbar-content {
@@ -53,21 +69,13 @@
   border-radius: 4px;
 }
 
-/* When Home section is visible, background color on hover */
+/* Hover behavior for all nav links */
 .nav-links a:hover {
-  color: var(--secondary-color);
+  color: var(--accent-color); /* Consistent hover color for all links */
 }
 
 .nav-links a:focus {
   outline: none;
-}
-
-/* When Home section is NOT visible, only text color changes */
-.navbar-scrolled .nav-links a:hover,
-.navbar-scrolled .nav-links a:focus {
-  background-color: transparent;
-  color: var(--accent-color);
-  transition: color 0.5s ease;
 }
 
 /* Responsive Design: Stack links vertically on smaller screens */

@@ -27,11 +27,21 @@ function Navbar() {
     };
   }, []);
 
+   // Function to scroll to the About section programmatically
+   const handleLogoClick = (e) => {
+    e.preventDefault(); // Prevent default anchor behavior
+    const aboutSection = document.getElementById('about');
+    if (aboutSection) {
+      aboutSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
   return (
     <header className={`navbar ${!isHomeInView ? 'navbar-scrolled' : ''}`}>
       <nav className="container navbar-content">
         <div className="logo">
-          <a href="#home">Gil Shwartz</a>
+           {/* Prevent default and scroll manually on logo click */}
+          <a href="#about" onClick={handleLogoClick}>Gil Shwartz</a>
           <span className="slogan">You define the goal, I make it happen.</span>
         </div>
         <ul className="nav-links">

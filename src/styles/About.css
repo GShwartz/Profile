@@ -2,7 +2,7 @@
   background-color: var(--background-color);
   color: var(--text-color);
   padding: 4rem 1.5rem;
-  scroll-margin-top: 70px;
+  scroll-margin-top: 100px;
 }
 
 .about-wrapper {

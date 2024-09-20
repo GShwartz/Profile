@@ -1,5 +1,8 @@
 .projects {
-  scroll-margin-top: 70px;
+  margin-top: -4rem;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  padding: 4rem 1.5rem;
 }
 
 .projects h2 {
