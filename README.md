@@ -1,4 +1,4 @@
--
+
 ## Deployment with Dockerfile
 
 This application can be deployed using Docker by following these steps:
@@ -9,7 +9,7 @@ This application can be deployed using Docker by following these steps:
         cd Profile
    ```
 
-2. **Run**
+2. **Build & Run**
    ```bash
         docker build -t <your-app-name> .
         docker run -p <your-port>:80 <your-app-name>
@@ -20,4 +20,3 @@ This application can be deployed using Docker by following these steps:
     Navigate to http://localhost:<your-port> in your browser.
 
 <br />
--
