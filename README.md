@@ -33,6 +33,8 @@ Example:
     ```
 
 ---
-### **Kubernetes**
-
-WIP
+### Kubernetes
+1. **Deploy**
+    ```bash
+        kubectl apply -f k8s-manifest.yml
+    ```
