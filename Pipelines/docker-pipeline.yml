@@ -1,5 +1,7 @@
 trigger:
-- Docker
+  branches:
+    include:
+      - Docker
 
 pool: Gil WebApp
 

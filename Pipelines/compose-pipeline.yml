@@ -1,5 +1,7 @@
 trigger:
-- Compose
+  branches:
+    include:
+      - Compose
 
 pool: Gil WebApp
 
