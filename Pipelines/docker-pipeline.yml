@@ -24,6 +24,7 @@ steps:
         sudo apt-get update
         sudo apt-get install -y docker-ce docker-ce-cli containerd.io
         echo "Docker installation completed!"
+
       else
         echo "Docker is already installed"
       fi
@@ -38,6 +39,7 @@ steps:
           echo "Stopping and removing containers..."
           docker stop $(docker ps -aq)
           docker rm $(docker ps -aq)
+
       else
           echo "No containers to stop or remove."
       fi
@@ -46,6 +48,7 @@ steps:
       if [ "$(docker images -q)" ]; then
           echo "Removing images..."
           docker rmi $(docker images -q)
+          
       else
           echo "No images to remove."
       fi
