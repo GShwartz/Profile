@@ -3,9 +3,10 @@
   position: sticky;
   top: 0;
   z-index: 1000;
-  padding: 1rem 2rem;
+  padding: 0.5rem 2rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
   transition: all 0.5s ease; /* Apply transition to all properties */
+  margin-bottom: -2rem;
 }
 
 .fade-in {

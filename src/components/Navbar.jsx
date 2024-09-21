@@ -1,34 +1,36 @@
 import React, { useEffect, useState } from 'react';
-import '../styles//Navbar.css';
+import '../styles/Navbar.css';
 
 function Navbar() {
-  const [isHomeInView, setIsHomeInView] = useState(true);
+  const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const homeSection = document.getElementById('home');
-    
+    const sections = document.querySelectorAll('section'); // Select all sections
+
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
-          setIsHomeInView(entry.isIntersecting);
+          if (entry.isIntersecting) {
+            setActiveSection(entry.target.id); // Set the active section ID when it comes into view
+          }
         });
       },
-      { threshold: 0.5 } // Trigger when 50% of the Home section is visible
+      { threshold: 0.5 } // Trigger when 50% of the section is visible
     );
 
-    if (homeSection) {
-      observer.observe(homeSection);
-    }
+    sections.forEach((section) => {
+      observer.observe(section);
+    });
 
     return () => {
-      if (homeSection) {
-        observer.unobserve(homeSection);
-      }
+      sections.forEach((section) => {
+        observer.unobserve(section);
+      });
     };
   }, []);
 
-   // Function to scroll to the About section programmatically
-   const handleLogoClick = (e) => {
+  // Function to scroll to a section programmatically
+  const handleLogoClick = (e) => {
     e.preventDefault(); // Prevent default anchor behavior
     const aboutSection = document.getElementById('about');
     if (aboutSection) {
@@ -37,18 +39,34 @@ function Navbar() {
   };
 
   return (
-    <header className={`navbar ${!isHomeInView ? 'navbar-scrolled' : ''}`}>
+    <header className={`navbar ${activeSection !== 'home' ? 'navbar-scrolled' : ''}`}>
       <nav className="container navbar-content">
         <div className="logo">
-           {/* Prevent default and scroll manually on logo click */}
+          {/* Prevent default and scroll manually on logo click */}
           <a href="#about" onClick={handleLogoClick}>Gil Shwartz</a>
           <span className="slogan">You define the goal, I make it happen.</span>
         </div>
         <ul className="nav-links">
-          <li><a href="#skills">Skills</a></li>
-          <li><a href="#education">Education</a></li>
-          <li><a href="#projects">Projects</a></li>
-          <li><a href="#contact">Contact</a></li>
+          <li>
+            <a href="#skills" className={activeSection === 'skills' ? 'active' : ''}>
+              Skills
+            </a>
+          </li>
+          <li>
+            <a href="#education" className={activeSection === 'education' ? 'active' : ''}>
+              Education
+            </a>
+          </li>
+          <li>
+            <a href="#projects" className={activeSection === 'projects' ? 'active' : ''}>
+              Projects
+            </a>
+          </li>
+          <li>
+            <a href="#contact" className={activeSection === 'contact' ? 'active' : ''}>
+              Contact
+            </a>
+          </li>
         </ul>
       </nav>
     </header>

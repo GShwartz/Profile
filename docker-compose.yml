@@ -1,29 +1,37 @@
-version: '3.8'
-
 services:
   gil:
     build:
       context: .
       dockerfile: Dockerfile
+
     ports:
       - "8080:80"
+
     volumes:
       - ./build:/app/build
+    
     depends_on:
       - nginx
+    
     restart: unless-stopped
+    
     networks:
       - gil-network
 
   nginx:
     image: nginx:alpine
+    
     ports:
       - "80:80"
+    
     volumes:
       - ./build:/usr/share/nginx/html
+    
     restart: unless-stopped
+    
     networks:
       - gil-network
+    
     command: ["nginx", "-g", "daemon off;"]
 
 networks:
