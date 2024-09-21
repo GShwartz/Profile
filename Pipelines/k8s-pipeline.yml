@@ -48,7 +48,7 @@ steps:
       if [ "$(docker images -q)" ]; then
           echo "Removing images..."
           docker rmi $(docker images -q)
-          
+
       else
           echo "No images to remove."
       fi
@@ -58,6 +58,13 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'docker build -t gil .'
+
+- task: Bash@3
+  displayName: 'Run K8S Deployment'
+  inputs:
+    targetType: 'inline'
+    script: |
+      kubectl apply -f k8s_manifest.yml
 
 - task: Bash@3
   displayName: 'Wait for Testing'
