@@ -1,5 +1,5 @@
 trigger:
-- Compose
+- k8s
 
 pool: Gil WebApp
 
@@ -14,10 +14,16 @@ steps:
     script: 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker rmi $(docker images -q)'
 
 - task: Bash@3
-  displayName: 'Run Docker Compose'
+  displayName: 'Build Docker Image'
   inputs:
     targetType: 'inline'
-    script: 'docker compose up -d --build'
+    script: 'docker build -t gil .'
+
+- task: Bash@3
+  displayName: 'Run Docker Image'
+  inputs:
+    targetType: 'inline'
+    script: 'docker run -d -p 8080:80 gil'
 
 - task: Bash@3
   displayName: 'Wait for Testing'

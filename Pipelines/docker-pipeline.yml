@@ -1,5 +1,5 @@
 trigger:
-- main
+- Docker
 
 pool: Gil WebApp
 
@@ -12,7 +12,7 @@ steps:
   inputs:
     targetType: 'inline'
     script: 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker rmi $(docker images -q)'
-    
+
 - task: Bash@3
   displayName: 'Build Docker Image'
   inputs:
