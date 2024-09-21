@@ -8,10 +8,45 @@ steps:
   displayName: 'Print all variables'
 
 - task: Bash@3
+  displayName: 'Install Docker'
+  inputs:
+    targetType: 'inline'
+    script: |
+      if ! command -v docker &> /dev/null
+      then
+        echo "Docker not found, installing..."
+        sudo apt-get update
+        sudo apt-get install -y apt-transport-https ca-certificates curl software-properties-common
+        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+        echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+        sudo apt-get update
+        sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+        echo "Docker installation completed!"
+      else
+        echo "Docker is already installed"
+      fi
+
+- task: Bash@3
   displayName: 'Clear Containers and Images'
   inputs:
     targetType: 'inline'
-    script: 'docker stop $(docker ps -aq) && docker rm $(docker ps -aq) && docker rmi $(docker images -q)'
+    script: |
+      # Check if there are any containers to stop and remove
+      if [ "$(docker ps -aq)" ]; then
+          echo "Stopping and removing containers..."
+          docker stop $(docker ps -aq)
+          docker rm $(docker ps -aq)
+      else
+          echo "No containers to stop or remove."
+      fi
+
+      # Check if there are any images to remove
+      if [ "$(docker images -q)" ]; then
+          echo "Removing images..."
+          docker rmi $(docker images -q)
+      else
+          echo "No images to remove."
+      fi
 
 - task: Bash@3
   displayName: 'Build Docker Image'
