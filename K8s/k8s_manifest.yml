@@ -11,12 +11,18 @@ metadata:
   name: gil-deployment
   namespace: gil-namespace
 spec:
-  replicas: 2  # Run at least 2 replicas for zero downtime
-  strategy:
-    type: RollingUpdate
-    rollingUpdate:
-      maxUnavailable: 0  # Ensure no pods are unavailable during updates
-      maxSurge: 1        # Allow an additional pod during updates
+  replicas: 1
+
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+
+  #strategy:
+  #  type: RollingUpdate
+  #  rollingUpdate:
+  #    maxUnavailable: 0  # Ensure no pods are unavailable during updates
+  #    maxSurge: 1        # Allow an additional pod during updates
   
   selector:
     matchLabels:
@@ -54,15 +60,6 @@ spec:
             initialDelaySeconds: 5
             periodSeconds: 5
           
-          resources:
-            requests:
-              memory: "128Mi"  # Minimum 128 MiB of memory
-              cpu: "100m"      # Minimum 0.1 of a CPU core
-            
-            limits:
-              memory: "256Mi"  # Maximum 256 MiB of memory
-              cpu: "300m"      # Maximum 0.3 of a CPU core
-      
       volumes:
         - name: build-volume
           persistentVolumeClaim:
@@ -97,6 +94,12 @@ metadata:
 
 spec:
   replicas: 1
+
+  tolerations:
+    - key: "node-role.kubernetes.io/control-plane"
+      operator: "Exists"
+      effect: "NoSchedule"
+
   selector:
     matchLabels:
       app: nginx
@@ -114,18 +117,10 @@ spec:
           ports:
             - containerPort: 80
           
-          volumeMounts:              # Mount build volume for nginx to serve
+          volumeMounts:
             - name: build-volume
               mountPath: /usr/share/nginx/html
           
-          resources:  # Add resource requests and limits
-            requests:
-              memory: "64Mi"
-              cpu: "100m"
-            
-            limits:
-              memory: "128Mi"
-              cpu: "250m"
       volumes:
         - name: build-volume
           persistentVolumeClaim:
