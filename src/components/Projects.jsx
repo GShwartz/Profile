@@ -12,8 +12,8 @@ function Projects() {
     },
     {
       title: 'My Profile WebApp',
-      description: 'Deploy this WebApp',
-      language: 'Docker | React | HTML | CSS',
+      description: 'Build & Deploy this WebApp',
+      language: 'React | HTML | CSS | Docker | CI/CD',
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Profile',
     },
