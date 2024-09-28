@@ -16,7 +16,7 @@ function Projects() {
       language: 'React | HTML | CSS | Docker | CI/CD',
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Profile',
-      demoLink: 'https://myprofiledemo.com', // Add your demo link here
+      demoLink: 'https://github.com/GShwartz/Profile',
     },
   ];
 
