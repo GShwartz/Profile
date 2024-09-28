@@ -76,3 +76,17 @@
     font-size: 3rem;
   }
 }
+
+.button-group {
+  display: flex;
+  gap: 4rem;
+}
+
+.demo-button {
+  background-color: var(--button-background); /* You can change this to any color you like */
+}
+
+.demo-button:hover {
+  background-color: var(--button-hover-background); /* Consistent hover effect */
+}
+

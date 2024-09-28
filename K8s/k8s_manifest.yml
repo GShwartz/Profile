@@ -2,28 +2,43 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: gil-namespace
+  name: gil-namespace  # Define your namespace here
+
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-volume
+  namespace: gil-namespace  # Use the custom namespace
+spec:
+  capacity:
+    storage: 1Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: "/mnt/data"  # Path on the host machine
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: build-pvc
+  namespace: gil-namespace  # Use the custom namespace
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: gil-deployment
-  namespace: gil-namespace
+  namespace: gil-namespace  # Use the custom namespace
 spec:
   replicas: 1
-
-  tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
-
-  #strategy:
-  #  type: RollingUpdate
-  #  rollingUpdate:
-  #    maxUnavailable: 0  # Ensure no pods are unavailable during updates
-  #    maxSurge: 1        # Allow an additional pod during updates
-  
   selector:
     matchLabels:
       app: gil
@@ -34,31 +49,21 @@ spec:
         app: gil
     
     spec:
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
+
       containers:
         - name: gil
-          image: gil  # Ensure you are using the correct image
+          image: gilush/profile:latest   # Use the Docker Hub image from your repository
+          imagePullPolicy: Always         # Always pull the latest image from Docker Hub
           ports:
-            - containerPort: 8080  # App is listening on 8080
+            - containerPort: 8080
           
           volumeMounts:
             - name: build-volume
               mountPath: /app/build
-          
-          livenessProbe:
-            httpGet:
-              path: /healthz
-              port: 8080
-            
-            initialDelaySeconds: 10
-            periodSeconds: 10
-          
-          readinessProbe:
-            httpGet:
-              path: /readyz
-              port: 8080
-            
-            initialDelaySeconds: 5
-            periodSeconds: 5
           
       volumes:
         - name: build-volume
@@ -70,7 +75,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: gil-service
-  namespace: gil-namespace
+  namespace: gil-namespace  # Use the custom namespace
 
 spec:
   selector:
@@ -81,25 +86,18 @@ spec:
       protocol: TCP
       port: 8080           # Expose service on port 8080
       targetPort: 8080      # Forward traffic to the container on port 8080
-      nodePort: 30080       # External node port (must be in range 30000-32767)
   
-  type: NodePort
+  type: ClusterIP          # No longer need NodePort since Ingress will handle routing
 
 ---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: nginx-deployment
-  namespace: gil-namespace
+  namespace: gil-namespace  # Use the custom namespace
 
 spec:
   replicas: 1
-
-  tolerations:
-    - key: "node-role.kubernetes.io/control-plane"
-      operator: "Exists"
-      effect: "NoSchedule"
-
   selector:
     matchLabels:
       app: nginx
@@ -110,10 +108,14 @@ spec:
         app: nginx
     
     spec:
+      tolerations:
+        - key: "node-role.kubernetes.io/control-plane"
+          operator: "Exists"
+          effect: "NoSchedule"
+
       containers:
         - name: nginx
           image: nginx:alpine
-          
           ports:
             - containerPort: 80
           
@@ -131,7 +133,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: nginx-service
-  namespace: gil-namespace
+  namespace: gil-namespace  # Use the custom namespace
 
 spec:
   selector:
@@ -140,6 +142,42 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 80
+      targetPort: 8080
   
-  type: LoadBalancer
+  type: ClusterIP          # Ingress will handle the outside access
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: gil-nginx-ingress
+  namespace: gil-namespace  # Use the custom namespace
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+    nginx.ingress.kubernetes.io/ssl-redirect: "false" # Disable SSL redirect if using HTTP
+
+spec:
+  rules:
+    # Rule for GIL service
+    - host: gil.example.com  # Replace with your domain or external IP
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: gil-service
+                port:
+                  number: 8080
+
+    # Rule for NGINX service
+    - host: nginx.example.com  # Replace with your domain or external IP
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: nginx-service
+                port:
+                  number: 80

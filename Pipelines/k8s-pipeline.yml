@@ -102,10 +102,41 @@ steps:
       fi
 
 - task: Bash@3
+  displayName: 'Clear PVCs'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sudo kubectl get pvc --all-namespaces --no-headers | awk '$1 != "default" {print $2 " -n " $1}' | xargs -I {} sudo kubectl delete pvc {}
+      sudo kubectl get pvc --all-namespaces
+
+- task: Bash@3
+  displayName: 'Clear K8s Namespaces'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sudo kubectl delete namespaces $(sudo kubectl get namespaces --no-headers | awk '$1 != "default" && $1 != "kube-system" && $1 != "kube-public" && $1 != "kube-node-lease" {print $1}')
+
+- task: Bash@3
+  displayName: 'Create K8s Namespace'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sudo kubectl create namespace gil-namespace
+      sudo kubectl get namespaces
+
+- task: Bash@3
+  displayName: 'Create K8s PVC'
+  inputs:
+    targetType: 'inline'
+    script: |
+      sudo kubectl create pvc gil-pvc --storage=1Gi --access-modes=ReadWriteMany -n gil-namespace
+
+- task: Bash@3
   displayName: 'Build Docker Image'
   inputs:
     targetType: 'inline'
-    script: 'docker build -t gil .'
+    script: |
+      'docker build -t gil .'
 
 - task: Bash@3
   displayName: 'Run K8S Deployment'
@@ -118,4 +149,5 @@ steps:
   displayName: 'Wait for Testing'
   inputs:
     targetType: 'inline'
-    script: 'echo "Waiting for 11 minute to test the container"; sleep 60'
+    script: | 
+      'echo "Waiting for 11 minute to test the container"; sleep 60'

@@ -11,11 +11,12 @@ function Projects() {
       githubLink: 'https://github.com/GShwartz/Quick-AD',
     },
     {
-      title: 'My Profile WebApp',
-      description: 'Build & Deploy this WebApp',
+      title: 'Profile WebApp',
+      description: 'Build & Deploy My Profile',
       language: 'React | HTML | CSS | Docker | CI/CD',
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Profile',
+      demoLink: 'https://myprofiledemo.com', // Add your demo link here
     },
   ];
 
@@ -30,14 +31,26 @@ function Projects() {
               <h4>{project.language}</h4>
               <h4>{project.year}</h4>
               <p>{project.description}</p>
-              <a
-                href={project.githubLink}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="button"
-              >
-                View on GitHub
-              </a>
+              <div className="button-group">
+                <a
+                  href={project.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="button"
+                >
+                  View on GitHub
+                </a>
+                {project.demoLink && (
+                  <a
+                    href={project.demoLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="button demo-button"
+                  >
+                    DEMO
+                  </a>
+                )}
+              </div>
             </div>
           ))}
         </div>
