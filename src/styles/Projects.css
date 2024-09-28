@@ -57,6 +57,20 @@
   align-self: flex-start;
 }
 
+.button-group {
+  display: flex;
+  gap: 4rem;
+}
+
+.demo-button {
+  background-color: var(--button-background);
+}
+
+.demo-button:hover {
+  background-color: var(--button-hover-background);
+}
+
+
 @media (min-width: 768px) {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);
