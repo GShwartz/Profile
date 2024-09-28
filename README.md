@@ -36,5 +36,5 @@ Example:
 ### Kubernetes
 1. **Deploy**
     ```bash
-        kubectl apply -f k8s-manifest.yml
-    ```
+      Work in progress...
+     ```
