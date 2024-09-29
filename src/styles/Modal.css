@@ -10,41 +10,70 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-  }
+    pointer-events: auto;
+}
   
-  /* Modal Content - with transparency */
-  .modal-content {
+/* Modal Content - with transparency */
+.modal-content {
     position: relative;
-    background-color: rgba(31, 31, 31, 0.9); /* This will make the background slightly transparent */
+    background-color: rgba(31, 31, 31, 0.9); /* Slight transparency */
     padding: 2rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     max-width: 90%;
     max-height: 80%;
-    overflow-y: auto; /* In case the content exceeds modal height */
+    overflow-y: auto; /* Enable scrolling */
     z-index: 1001;
     color: var(--text-color);
-  }
-  
-  /* Make sure buttons have some margin */
-  .button-group {
+    pointer-events: auto;
+}
+
+.modal-content * {
+    pointer-events: auto;
+}
+
+/* Scrollbar Styling */
+
+/* Default scrollbar for Webkit browsers */
+.modal-content::-webkit-scrollbar {
+    width: 12px; /* Slightly larger width */
+}
+
+/* Default scrollbar thumb with primary color */
+.modal-content::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color); /* Default primary color */
+    border-radius: 10px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, transform 0.3s ease; /* Smooth transition */
+}
+
+/* Hover effect for scrollbar thumb */
+.modal-content::-webkit-scrollbar-thumb:hover {
+    background-color: var(--secondary-color); /* Changes to secondary color on hover */
+    box-shadow: 0 0 12px var(--accent-color); /* Adds a glowing accent color effect */
+    transform: scale(1.1); /* Slightly increase size on hover for effect */
+}
+
+/* Scrollbar track */
+.modal-content::-webkit-scrollbar-track {
+    background-color: var(--card-background); /* Track background color */
+}
+
+/* Scrollbar for Firefox */
+.modal-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--card-background); /* Colors for Firefox */
+}
+
+/* Button Group Styling */
+.button-group {
     display: flex;
     gap: 1rem;
-  }
-  
-  /* Button styling (already included, but ensure it looks good in modal too) */
-  /*.demo-button {
-    background-color: var(--secondary-color);
-  }
-  
-  .demo-button:hover {
-    background-color: var(--button-hover-background);
-  }
-  
-  /* Close button specific styles */
-  .modal-content .button {
-    padding: 0.5rem 1rem; /* Adjust padding to reduce width */
-    width: auto; /* Ensure it only takes up the necessary width */
+}
+
+/* Close button specific styles */
+.modal-content .button {
+    padding: 0.5rem 1rem;
+    width: auto;
     background-color: var(--button-background);
     border-radius: 4px;
     font-size: 1rem;
@@ -52,29 +81,8 @@
     cursor: pointer;
     margin-top: 1rem;
     transition: background-color 0.2s ease;
-  }
-  
-  .modal-content .button:hover {
-    background-color: var(--button-hover-background); /* Add hover effect */
-  }
-  
-  /* Scrollbar styles for Webkit browsers (Chrome, Safari, etc.) */
-  .modal-content::-webkit-scrollbar {
-    width: 8px;
-  }
-  
-  .modal-content::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color); /* Make it match the theme */
-    border-radius: 4px;
-  }
-  
-  .modal-content::-webkit-scrollbar-track {
-    background-color: var(--card-background); /* Track background color */
-  }
-  
-  /* Scrollbar for Firefox */
-  .modal-content {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) var(--card-background);
-  }
-  
+}
+
+.modal-content .button:hover {
+    background-color: var(--button-hover-background);
+}

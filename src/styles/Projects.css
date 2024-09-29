@@ -57,52 +57,46 @@
   align-self: flex-start;
 }
 
-/* Updated button styles */
-.button-group {
-  display: flex;
-  justify-content: space-between; /* Ensure even spacing between buttons */
-  gap: 2rem;
-  margin-top: 1rem;
-}
-
 .button {
   display: inline-block;
-  background-color: var(--primary-color);
-  color: var(--button);
   padding: 0.75rem 1.5rem;
   border-radius: 6px; /* Smooth, rounded edges */
   font-size: 0.9rem;
   font-weight: 600;
   text-align: center;
-  width: 48%; /* Ensure both buttons take equal width */
+  width: 100%; /* Make all buttons full width inside the button-group */
+  background-color: var(--button-background); /* Consistent background color for all buttons */
+  color: var(--button); /* Default text color */
+  border: none; /* Remove the white border */
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Subtle shadow */
   transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .button:hover {
-  background-color: var(--button-hover-background); /* Change color on hover */
+  background-color: var(--button-hover-background); /* Hover effect */
   transform: translateY(-3px); /* Slight lift effect */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 
-.demo-button {
-  background-color: var(--secondary-color); /* Different color for DEMO button */
+.button-group {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
 }
 
-.demo-button:hover {
-  background-color: var(--button-hover-background); /* Hover effect for DEMO button */
-}
-
-.project-card .button-group {
-  width: 100%; /* Ensures that the buttons take full width inside the card */
+.button-group .button {
+  flex-grow: 1;
 }
 
 .project-card .button {
-  flex-grow: 1;
-  margin: 0;
-  text-align: center;
+  height: 45px; /* Set a fixed height for all buttons */
+  line-height: 1.5;
 }
 
+.project-card .button-group {
+  width: 100%;
+  display: flex;
+}
 
 @media (min-width: 768px) {
   .projects-grid {

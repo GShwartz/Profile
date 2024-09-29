@@ -80,17 +80,18 @@ function Projects() {
                   GitHub
                 </a>
                 {project.title === 'K8s install automation' && (
-                  <button
-                    onClick={() => toggleModal('script', project.demoLink)}
-                    className="button demo-button"
-                  >
-                    Script
-                  </button>
+                  <>
+                    <button
+                      onClick={() => toggleModal('script', project.demoLink)}
+                      className="button demo-button"
+                    >
+                      Script
+                    </button>
+                    <button className="button demo-button" disabled>
+                      DEMO
+                    </button>
+                  </>
                 )}
-                {/* DEMO button does nothing */}
-                <button className="button demo-button" disabled>
-                  DEMO
-                </button>
               </div>
             </div>
           ))}
@@ -98,11 +99,11 @@ function Projects() {
       </div>
 
       {/* Modal for displaying the bash script */}
-      <Modal 
-        isOpen={isOpen} 
-        onRequestClose={() => setIsOpen(false)} 
+      <Modal
+        isOpen={isOpen}
+        onRequestClose={() => setIsOpen(false)}
         contentLabel="Bash Script Modal"
-        className="modal-content" 
+        className="modal-content"
         overlayClassName="modal-overlay"
       >
         <h2>Bash Script</h2>
