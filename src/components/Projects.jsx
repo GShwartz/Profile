@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Prism from 'prismjs'; // Import Prism.js
 import 'prismjs/themes/prism-okaidia.css'; // Import Prism theme (choose your preferred theme)
-import 'prismjs/components/prism-bash';    // Import Bash language syntax highlighting
+import 'prismjs/components/prism-bash'; // Import Bash language syntax highlighting
 import '../styles/Projects.css'; // Existing project styles
 import '../styles/Modal.css'; // Modal styles
 
@@ -69,7 +69,7 @@ function Projects() {
   // Apply Prism.js syntax highlighting once the modal content changes and modal is open
   useEffect(() => {
     if (isOpen && modalContent) {
-      setTimeout(() => Prism.highlightAll(), 0);  // Ensure Prism.js applies highlighting after state updates
+      setTimeout(() => Prism.highlightAll(), 0); // Ensure Prism.js applies highlighting after state updates
     }
   }, [isOpen, modalContent]);
 
@@ -126,11 +126,13 @@ function Projects() {
         ) : error ? (
           <p>Error: {error}</p>
         ) : (
-          <pre>
-            <code className="language-bash">
-              {modalContent} {/* Display script content */}
-            </code>
-          </pre>
+          <div className="scrollable-content">
+            <pre>
+              <code className="language-bash">
+                {modalContent} {/* Display script content */}
+              </code>
+            </pre>
+          </div>
         )}
         <button className="button" onClick={closeModal}>Close</button>
       </Modal>

@@ -1,76 +1,81 @@
-/* Modal Overlay - centers the modal */
 .modal-overlay {
     position: fixed;
+    width: 100%;
     top: 0;
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: rgba(0, 0, 0, 0.75); /* Darkens the background */
+    background-color: rgba(0, 0, 0, 0.75);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 1000;
+
 }
 
 .modal-content {
     position: relative;
-    background-color: rgba(31, 31, 31, 0.9); /* Keep modal background transparent */
+    background-color: rgba(31, 31, 31, 0.9);
     padding: 1.5rem;
     border-radius: 8px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    max-width: 60%;
+    max-width: 65%;
     max-height: 70%;
-    overflow-y: auto; /* Enable scrolling */
-    z-index: 1001;
-    overscroll-behavior: contain;
-}
-
-.modal-content pre, .modal-content code {
-    background: none !important; /* Remove any background override */
-    color: inherit !important; /* Remove any color override */
-}
-
-/* Make sure buttons have some margin */
-.button-group {
     display: flex;
-    gap: 1rem;
+    flex-direction: column;
+    z-index: 1001;
+    color: var(--text-color);
+
 }
 
-/* Close button specific styles */
+/* Container that controls both vertical and horizontal scrolling */
+.scrollable-content {
+    flex-grow: 1;
+    overflow-y: auto; /* Enable both vertical and horizontal scrolling */
+    display: block;
+}
+
+/* Pre element does not handle its own scrolling */
+pre {
+    white-space: pre; /* Prevent line wrapping */
+    word-break: normal; /* Do not break words */
+    margin: 0;
+    overflow: auto; /* Let the container handle scrolling */
+
+}
+
+/* Scrollbar customization for Webkit browsers */
+.scrollable-content::-webkit-scrollbar {
+    width: 8px;
+    height: 8px; /* Ensures the horizontal scrollbar is visible */
+}
+
+.scrollable-content::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+.scrollable-content::-webkit-scrollbar-track {
+    background-color: var(--card-background);
+}
+
+/* Scrollbar styling for Firefox */
+.scrollable-content {
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--card-background);
+}
+
+/* Button styling */
 .modal-content .button {
-    padding: 0.5rem 1rem; /* Adjust padding to reduce width */
-    width: auto; /* Ensure it only takes up the necessary width */
+    padding: 0.5rem 1rem;
     background-color: var(--button-background);
     color: var(--button);
     border-radius: 4px;
     font-size: 1rem;
-    text-align: center;
     cursor: pointer;
-    margin-top: 1rem;
-    transition: none; /* Removed the transition to remove the hover animation */
+    align-self: flex-end; /* Button aligns to the right */
 }
 
-/* Removed hover animation but kept background color change */
 .modal-content .button:hover {
-    background-color: var(--button-hover-background); /* Add hover effect but no animation */
-}
-
-/* Scrollbar styles for Webkit browsers (Chrome, Safari, etc.) */
-.modal-content::-webkit-scrollbar {
-    width: 8px;
-}
-
-.modal-content::-webkit-scrollbar-thumb {
-    background-color: var(--primary-color); /* Make it match the theme */
-    border-radius: 4px;
-}
-
-.modal-content::-webkit-scrollbar-track {
-    background-color: var(--card-background); /* Track background color */
-}
-
-/* Scrollbar for Firefox */
-.modal-content {
-    scrollbar-width: thin;
-    scrollbar-color: var(--primary-color) var(--card-background);
+    background-color: var(--button-hover-background);
 }
