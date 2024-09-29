@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import Modal from 'react-modal';
-import '../styles/Projects.css';
+import '../styles/Projects.css'; // Existing projects styles
+import '../styles/Modal.css'; // New CSS file for modal styles
 
 Modal.setAppElement('#root'); // For accessibility
 
 function Projects() {
   const [isOpen, setIsOpen] = useState(false);
-  const [scriptContent, setScriptContent] = useState('');
+  const [modalContent, setModalContent] = useState(''); // Store content for the modal
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
@@ -35,23 +36,27 @@ function Projects() {
     },
   ];
 
-  const toggleModal = async (demoLink) => {
-    if (demoLink) {
-      setLoading(true);
-      setError(null);
+  const toggleModal = async (contentType, demoLink = null) => {
+    setLoading(true);
+    setError(null);
+
+    if (contentType === 'script' && demoLink) {
       try {
         const response = await fetch(demoLink);
         if (!response.ok) {
           throw new Error('Failed to fetch the script');
         }
         const script = await response.text();
-        setScriptContent(script);
+        setModalContent(script);
       } catch (err) {
         setError(err.message);
       }
-      setLoading(false);
+    } else if (contentType === 'html') {
+      setModalContent('<p>This is custom HTML content.</p>'); // Example HTML content
     }
-    setIsOpen(!isOpen);
+
+    setLoading(false);
+    setIsOpen(true);
   };
 
   return (
@@ -72,16 +77,20 @@ function Projects() {
                   rel="noopener noreferrer"
                   className="button"
                 >
-                  View on GitHub
+                  GitHub
                 </a>
-                {project.demoLink && (
+                {project.title === 'K8s install automation' && (
                   <button
-                    onClick={() => toggleModal(project.demoLink)}
+                    onClick={() => toggleModal('script', project.demoLink)}
                     className="button demo-button"
                   >
-                    DEMO
+                    Script
                   </button>
                 )}
+                {/* DEMO button does nothing */}
+                <button className="button demo-button" disabled>
+                  DEMO
+                </button>
               </div>
             </div>
           ))}
@@ -91,7 +100,7 @@ function Projects() {
       {/* Modal for displaying the bash script */}
       <Modal 
         isOpen={isOpen} 
-        onRequestClose={() => toggleModal(null)} 
+        onRequestClose={() => setIsOpen(false)} 
         contentLabel="Bash Script Modal"
         className="modal-content" 
         overlayClassName="modal-overlay"
@@ -104,11 +113,11 @@ function Projects() {
         ) : (
           <pre>
             <code style={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', color: 'var(--text-color)' }}>
-              {scriptContent}
+              {modalContent}
             </code>
           </pre>
         )}
-        <button className="button" onClick={() => toggleModal(null)}>Close</button>
+        <button className="button" onClick={() => setIsOpen(false)}>Close</button>
       </Modal>
     </section>
   );
