@@ -74,7 +74,6 @@
 
 .button:hover {
   background-color: var(--button-hover-background); /* Hover effect */
-  transform: translateY(-3px); /* Slight lift effect */
   box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2); /* Enhanced shadow on hover */
 }
 

@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import '../styles/Projects.css'; // Existing projects styles
-import '../styles/Modal.css'; // New CSS file for modal styles
+import Prism from 'prismjs'; // Import Prism.js
+import 'prismjs/themes/prism-okaidia.css'; // Import Prism theme (choose your preferred theme)
+import 'prismjs/components/prism-bash';    // Import Bash language syntax highlighting
+import '../styles/Projects.css'; // Existing project styles
+import '../styles/Modal.css'; // Modal styles
 
-Modal.setAppElement('#root'); // For accessibility
+Modal.setAppElement('#root'); // Accessibility
 
 function Projects() {
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(''); // Store content for the modal
+  const [modalContent, setModalContent] = useState(''); // To store content for the modal
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // Project data array
   const projects = [
     {
       title: 'Quick-AD',
@@ -36,6 +40,7 @@ function Projects() {
     },
   ];
 
+  // Function to toggle the modal and fetch content if necessary
   const toggleModal = async (contentType, demoLink = null) => {
     setLoading(true);
     setError(null);
@@ -47,17 +52,26 @@ function Projects() {
           throw new Error('Failed to fetch the script');
         }
         const script = await response.text();
-        setModalContent(script);
+        setModalContent(script); // Set the script content to be displayed
       } catch (err) {
         setError(err.message);
       }
-    } else if (contentType === 'html') {
-      setModalContent('<p>This is custom HTML content.</p>'); // Example HTML content
     }
 
     setLoading(false);
-    setIsOpen(true);
+    setIsOpen(true); // Open the modal
   };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+
+  // Apply Prism.js syntax highlighting once the modal content changes and modal is open
+  useEffect(() => {
+    if (isOpen && modalContent) {
+      setTimeout(() => Prism.highlightAll(), 0);  // Ensure Prism.js applies highlighting after state updates
+    }
+  }, [isOpen, modalContent]);
 
   return (
     <section id="projects" className="projects">
@@ -101,7 +115,7 @@ function Projects() {
       {/* Modal for displaying the bash script */}
       <Modal
         isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
+        onRequestClose={closeModal} // Close modal on request
         contentLabel="Bash Script Modal"
         className="modal-content"
         overlayClassName="modal-overlay"
@@ -113,12 +127,12 @@ function Projects() {
           <p>Error: {error}</p>
         ) : (
           <pre>
-            <code style={{ whiteSpace: 'pre-wrap', fontFamily: 'monospace', color: 'var(--text-color)' }}>
-              {modalContent}
+            <code className="language-bash">
+              {modalContent} {/* Display script content */}
             </code>
           </pre>
         )}
-        <button className="button" onClick={() => setIsOpen(false)}>Close</button>
+        <button className="button" onClick={closeModal}>Close</button>
       </Modal>
     </section>
   );
