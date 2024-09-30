@@ -1,3 +1,5 @@
+// src/components/Projects.jsx
+
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import Prism from 'prismjs';
@@ -5,6 +7,7 @@ import 'prismjs/themes/prism-okaidia.css';
 import 'prismjs/components/prism-bash';
 import '../styles/Projects.css';
 import '../styles/Modal.css';
+import projects from '../data/projectsData';
 
 Modal.setAppElement('#root');
 
@@ -17,46 +20,21 @@ function Projects() {
 
   // Helper function to get YouTube embed link
   const getYouTubeEmbedLink = (url) => {
-    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const regExp =
+      /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return match && match[1].length === 11
-      ? `https://www.youtube.com/embed/${match[1]}`
+    return match && match[1].length >= 11
+      ? `https://www.youtube.com/embed/${match[1].substring(0, 11)}`
       : null;
   };
 
   // Helper function to extract YouTube video ID
   const getYouTubeVideoID = (url) => {
-    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const regExp =
+      /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return match && match[1].length === 11 ? match[1] : null;
+    return match && match[1].length >= 11 ? match[1].substring(0, 11) : null;
   };
-
-  // Project data array
-  const projects = [
-    {
-      title: 'Quick-AD',
-      description: 'An easier, more comfortable way to interact with Active Directory.',
-      language: 'PowerShell',
-      year: '2023',
-      githubLink: 'https://github.com/GShwartz/Quick-AD',
-    },
-    {
-      title: 'K8s install automation',
-      description: 'Install K8s Master/Agents',
-      language: 'BASH',
-      year: '2024',
-      githubLink: 'https://github.com/GShwartz/Tools/tree/main/Kubernetes/K8s',
-      demoLink: 'https://raw.githubusercontent.com/GShwartz/Tools/main/Kubernetes/K8s/install_k8s.sh',
-      videoLink: 'https://www.youtube.com/watch?v=f_TU73jTstM&t=37s',
-    },
-    {
-      title: 'Profile WebApp',
-      description: 'Build & Deploy My Profile',
-      language: 'React | HTML | CSS | Docker | CI/CD',
-      year: '2024',
-      githubLink: 'https://github.com/GShwartz/Profile',
-    },
-  ];
 
   // Function to toggle the modal and fetch content if necessary
   const toggleModal = async (contentType, link = null) => {
@@ -102,7 +80,7 @@ function Projects() {
   return (
     <section id="projects" className="projects">
       <div className="container">
-        <h2>My Projects</h2>
+        <h2>Projects</h2>
         <div className="projects-grid">
           {projects.map((project, index) => (
             <div key={index} className="card project-card">
@@ -110,6 +88,40 @@ function Projects() {
               <h4>{project.language}</h4>
               <h4>{project.year}</h4>
               <p>{project.description}</p>
+
+              {/* Video Thumbnail */}
+              {project.videoLink && (
+                <div
+                  className="video-thumbnail"
+                  onClick={() => toggleModal('video', project.videoLink)}
+                >
+                  <img
+                    src={`https://img.youtube.com/vi/${getYouTubeVideoID(
+                      project.videoLink
+                    )}/mqdefault.jpg`}
+                    alt={`${project.title} Demo`}
+                  />
+                  <svg
+                    className="play-button-overlay"
+                    width="64"
+                    height="64"
+                    viewBox="0 0 64 64"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <circle
+                      cx="32"
+                      cy="32"
+                      r="32"
+                      fill="black"
+                      fillOpacity="0.6"
+                    />
+                    <polygon points="26,20 44,32 26,44" fill="white" />
+                  </svg>
+                </div>
+              )}
+
+              {/* Button Group */}
               <div className="button-group">
                 <a
                   href={project.githubLink}
@@ -119,43 +131,13 @@ function Projects() {
                 >
                   GitHub
                 </a>
-                {project.title === 'K8s install automation' && (
-                  <>
-                    <button
-                      onClick={() => toggleModal('script', project.demoLink)}
-                      className="button"
-                    >
-                      Script
-                    </button>
-                    <div
-                      className="video-thumbnail"
-                      onClick={() => toggleModal('video', project.videoLink)}
-                    >
-                      <img
-                        src={`https://img.youtube.com/vi/${getYouTubeVideoID(
-                          project.videoLink
-                        )}/mqdefault.jpg`}
-                        alt={`${project.title} Demo`}
-                      />
-                      <svg
-                        className="play-button-overlay"
-                        width="64"
-                        height="64"
-                        viewBox="0 0 64 64"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <circle
-                          cx="32"
-                          cy="32"
-                          r="32"
-                          fill="black"
-                          fillOpacity="0.6"
-                        />
-                        <polygon points="26,20 44,32 26,44" fill="white" />
-                      </svg>
-                    </div>
-                  </>
+                {project.demoLink && (
+                  <button
+                    onClick={() => toggleModal('script', project.demoLink)}
+                    className="button"
+                  >
+                    Script
+                  </button>
                 )}
               </div>
             </div>
@@ -168,7 +150,9 @@ function Projects() {
         isOpen={isOpen}
         onRequestClose={closeModal}
         contentLabel="Content Modal"
-        className={`modal-content ${modalContentType === 'video' ? 'video-modal' : ''}`}
+        className={`modal-content ${
+          modalContentType === 'video' ? 'video-modal' : ''
+        }`}
         overlayClassName="modal-overlay"
       >
         {modalContentType === 'script' ? (
