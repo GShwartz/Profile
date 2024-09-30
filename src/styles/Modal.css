@@ -28,8 +28,9 @@
 
 /* Added padding to the sides of the modal header */
 .modal-content h2 {
-    padding: 0 1.5rem;
+    padding: 0 0;
     margin: 0;
+    color: var(--primary-color);
 }
 
 /* Scrollable content for script modal */
@@ -44,8 +45,8 @@
 
 /* Scrollbar customization for WebKit browsers on .scrollable-content */
 .scrollable-content::-webkit-scrollbar {
-    width: 8px;    /* Width of vertical scrollbar */
-    height: 8px;   /* Height of horizontal scrollbar */
+    width: 8px;
+    height: 8px;
 }
 
 .scrollable-content::-webkit-scrollbar-thumb {
@@ -73,8 +74,8 @@ pre {
 
 /* Scrollbar customization for WebKit browsers on pre */
 pre::-webkit-scrollbar {
-    width: 8px;    /* Width of vertical scrollbar */
-    height: 8px;   /* Height of horizontal scrollbar */
+    width: 8px;
+    height: 8px;
 }
 
 pre::-webkit-scrollbar-thumb {
@@ -117,7 +118,8 @@ code {
 }
 
 .modal-content.video-modal h2 {
-    padding: 1rem 1.5rem;
+    padding: 1rem 5rem;
+    color: var(--primary-color);
     margin: 0;
 }
 

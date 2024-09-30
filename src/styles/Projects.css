@@ -1,3 +1,4 @@
+/* Projects Section */
 .projects {
   margin-top: -4rem;
   background-color: var(--background-color);
@@ -6,7 +7,7 @@
 }
 
 .projects h2 {
-  text-align: flex-start;
+  text-align: left;
   margin-bottom: 2rem;
   font-size: 2rem;
   color: var(--primary-color);
@@ -22,7 +23,7 @@
 .project-card {
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 1.5rem;
   background-color: var(--card-background);
   border-radius: 8px;
@@ -50,26 +51,97 @@
 
 .project-card p {
   flex-grow: 1;
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   color: var(--text-color-light);
 }
 
-/* Project button styling */
-.project-card .button {
-  height: 45px; /* Set a fixed height for all buttons */
-  line-height: 1.5;
-}
-
+/* Button group styling */
 .button-group {
   display: flex;
+  flex-wrap: wrap;
   gap: 1rem;
   margin-top: 1rem;
 }
 
 .button-group .button {
-  flex-grow: 1;
+  flex: 1 1 calc(50% - 1rem);
+  min-width: 120px;
+  text-align: center;
+  padding: 0.75rem 1rem;
+  font-size: 1rem;
+  font-weight: 600;
+  background-color: var(--button-background);
+  color: var(--button);
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+.button-group .button:hover {
+  background-color: var(--button-hover-background);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
+}
+
+.button-group .button:active {
+  transform: translateY(0);
+  box-shadow: none;
+}
+
+.button-group .button:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.5);
+}
+
+/* Video Thumbnail Styling */
+.video-thumbnail {
+  position: relative;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  margin-top: 1rem;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.video-thumbnail img {
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover img {
+  transform: scale(1.05);
+}
+
+.video-thumbnail .play-button-overlay {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  transition: transform 0.3s ease;
+}
+
+.video-thumbnail:hover .play-button-overlay {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* Adjustments for small screens */
+@media (max-width: 600px) {
+  .button-group {
+    flex-direction: column;
+  }
+
+  .button-group .button {
+    flex: 1 1 100%;
+  }
+}
+
+/* Media Queries for Responsive Grid */
 @media (min-width: 768px) {
   .projects-grid {
     grid-template-columns: repeat(2, 1fr);

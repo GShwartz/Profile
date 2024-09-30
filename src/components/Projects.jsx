@@ -17,11 +17,18 @@ function Projects() {
 
   // Helper function to get YouTube embed link
   const getYouTubeEmbedLink = (url) => {
-    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
     const match = url.match(regExp);
-    return match && match[2].length >= 11
-      ? `https://www.youtube.com/embed/${match[2].substring(0,11)}`
+    return match && match[1].length === 11
+      ? `https://www.youtube.com/embed/${match[1]}`
       : null;
+  };
+
+  // Helper function to extract YouTube video ID
+  const getYouTubeVideoID = (url) => {
+    const regExp = /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[1].length === 11 ? match[1] : null;
   };
 
   // Project data array
@@ -40,7 +47,7 @@ function Projects() {
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Tools/tree/main/Kubernetes/K8s',
       demoLink: 'https://raw.githubusercontent.com/GShwartz/Tools/main/Kubernetes/K8s/install_k8s.sh',
-      videoLink: 'https://www.youtube.com/watch?v=C7zVusDfsiA',
+      videoLink: 'https://www.youtube.com/watch?v=f_TU73jTstM&t=37s',
     },
     {
       title: 'Profile WebApp',
@@ -58,7 +65,6 @@ function Projects() {
     setModalContentType(contentType);
 
     if (contentType === 'script' && link) {
-      // Fetch and set script content
       try {
         const response = await fetch(link);
         if (!response.ok) {
@@ -70,7 +76,6 @@ function Projects() {
         setError(err.message);
       }
     } else if (contentType === 'video' && link) {
-      // Set video embed link
       const embedLink = getYouTubeEmbedLink(link);
       if (embedLink) {
         setModalContent(embedLink);
@@ -118,16 +123,38 @@ function Projects() {
                   <>
                     <button
                       onClick={() => toggleModal('script', project.demoLink)}
-                      className="button demo-button"
+                      className="button"
                     >
                       Script
                     </button>
-                    <button
+                    <div
+                      className="video-thumbnail"
                       onClick={() => toggleModal('video', project.videoLink)}
-                      className="button demo-button"
                     >
-                      DEMO
-                    </button>
+                      <img
+                        src={`https://img.youtube.com/vi/${getYouTubeVideoID(
+                          project.videoLink
+                        )}/mqdefault.jpg`}
+                        alt={`${project.title} Demo`}
+                      />
+                      <svg
+                        className="play-button-overlay"
+                        width="64"
+                        height="64"
+                        viewBox="0 0 64 64"
+                        fill="none"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <circle
+                          cx="32"
+                          cy="32"
+                          r="32"
+                          fill="black"
+                          fillOpacity="0.6"
+                        />
+                        <polygon points="26,20 44,32 26,44" fill="white" />
+                      </svg>
+                    </div>
                   </>
                 )}
               </div>
