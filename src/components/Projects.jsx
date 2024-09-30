@@ -1,18 +1,28 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
-import Prism from 'prismjs'; // Import Prism.js
-import 'prismjs/themes/prism-okaidia.css'; // Import Prism theme (choose your preferred theme)
-import 'prismjs/components/prism-bash'; // Import Bash language syntax highlighting
-import '../styles/Projects.css'; // Existing project styles
-import '../styles/Modal.css'; // Modal styles
+import Prism from 'prismjs';
+import 'prismjs/themes/prism-okaidia.css';
+import 'prismjs/components/prism-bash';
+import '../styles/Projects.css';
+import '../styles/Modal.css';
 
-Modal.setAppElement('#root'); // Accessibility
+Modal.setAppElement('#root');
 
 function Projects() {
   const [isOpen, setIsOpen] = useState(false);
-  const [modalContent, setModalContent] = useState(''); // To store content for the modal
+  const [modalContentType, setModalContentType] = useState('');
+  const [modalContent, setModalContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  // Helper function to get YouTube embed link
+  const getYouTubeEmbedLink = (url) => {
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return match && match[2].length >= 11
+      ? `https://www.youtube.com/embed/${match[2].substring(0,11)}`
+      : null;
+  };
 
   // Project data array
   const projects = [
@@ -30,6 +40,7 @@ function Projects() {
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Tools/tree/main/Kubernetes/K8s',
       demoLink: 'https://raw.githubusercontent.com/GShwartz/Tools/main/Kubernetes/K8s/install_k8s.sh',
+      videoLink: 'https://www.youtube.com/watch?v=C7zVusDfsiA',
     },
     {
       title: 'Profile WebApp',
@@ -41,37 +52,47 @@ function Projects() {
   ];
 
   // Function to toggle the modal and fetch content if necessary
-  const toggleModal = async (contentType, demoLink = null) => {
+  const toggleModal = async (contentType, link = null) => {
     setLoading(true);
     setError(null);
+    setModalContentType(contentType);
 
-    if (contentType === 'script' && demoLink) {
+    if (contentType === 'script' && link) {
+      // Fetch and set script content
       try {
-        const response = await fetch(demoLink);
+        const response = await fetch(link);
         if (!response.ok) {
           throw new Error('Failed to fetch the script');
         }
         const script = await response.text();
-        setModalContent(script); // Set the script content to be displayed
+        setModalContent(script);
       } catch (err) {
         setError(err.message);
+      }
+    } else if (contentType === 'video' && link) {
+      // Set video embed link
+      const embedLink = getYouTubeEmbedLink(link);
+      if (embedLink) {
+        setModalContent(embedLink);
+      } else {
+        setError('Invalid YouTube link');
       }
     }
 
     setLoading(false);
-    setIsOpen(true); // Open the modal
+    setIsOpen(true);
   };
 
   const closeModal = () => {
     setIsOpen(false);
   };
 
-  // Apply Prism.js syntax highlighting once the modal content changes and modal is open
+  // Apply Prism.js syntax highlighting for scripts
   useEffect(() => {
-    if (isOpen && modalContent) {
-      setTimeout(() => Prism.highlightAll(), 0); // Ensure Prism.js applies highlighting after state updates
+    if (isOpen && modalContent && modalContentType === 'script') {
+      setTimeout(() => Prism.highlightAll(), 0);
     }
-  }, [isOpen, modalContent]);
+  }, [isOpen, modalContent, modalContentType]);
 
   return (
     <section id="projects" className="projects">
@@ -101,7 +122,10 @@ function Projects() {
                     >
                       Script
                     </button>
-                    <button className="button demo-button" disabled>
+                    <button
+                      onClick={() => toggleModal('video', project.videoLink)}
+                      className="button demo-button"
+                    >
                       DEMO
                     </button>
                   </>
@@ -112,29 +136,44 @@ function Projects() {
         </div>
       </div>
 
-      {/* Modal for displaying the bash script */}
+      {/* Modal for displaying content */}
       <Modal
         isOpen={isOpen}
-        onRequestClose={closeModal} // Close modal on request
-        contentLabel="Bash Script Modal"
-        className="modal-content"
+        onRequestClose={closeModal}
+        contentLabel="Content Modal"
+        className={`modal-content ${modalContentType === 'video' ? 'video-modal' : ''}`}
         overlayClassName="modal-overlay"
       >
-        <h2>Bash Script</h2>
+        {modalContentType === 'script' ? (
+          <h2>Bash Script</h2>
+        ) : (
+          <h2>Video Demo</h2>
+        )}
         {loading ? (
-          <p>Loading script...</p>
+          <p>Loading content...</p>
         ) : error ? (
           <p>Error: {error}</p>
-        ) : (
+        ) : modalContentType === 'script' ? (
+          // Render script content
           <div className="scrollable-content">
             <pre>
-              <code className="language-bash">
-                {modalContent} {/* Display script content */}
-              </code>
+              <code className="language-bash">{modalContent}</code>
             </pre>
           </div>
-        )}
-        <button className="button" onClick={closeModal}>Close</button>
+        ) : modalContentType === 'video' ? (
+          // Render video content
+          <div className="video-container">
+            <iframe
+              src={modalContent}
+              title="YouTube video player"
+              frameBorder="0"
+              allowFullScreen
+            ></iframe>
+          </div>
+        ) : null}
+        <button className="button" onClick={closeModal}>
+          Close
+        </button>
       </Modal>
     </section>
   );

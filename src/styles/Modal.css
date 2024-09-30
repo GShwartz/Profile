@@ -10,7 +10,6 @@
     align-items: center;
     justify-content: center;
     z-index: 1000;
-
 }
 
 .modal-content {
@@ -25,29 +24,28 @@
     flex-direction: column;
     z-index: 1001;
     color: var(--text-color);
-
 }
 
-/* Container that controls both vertical and horizontal scrolling */
+/* Added padding to the sides of the modal header */
+.modal-content h2 {
+    padding: 0 1.5rem;
+    margin: 0;
+}
+
+/* Scrollable content for script modal */
 .scrollable-content {
     flex-grow: 1;
-    overflow-y: auto; /* Enable both vertical and horizontal scrolling */
+    overflow-y: auto;
+    overflow-x: auto;
     display: block;
+    scrollbar-width: thin;
+    scrollbar-color: var(--primary-color) var(--card-background);
 }
 
-/* Pre element does not handle its own scrolling */
-pre {
-    white-space: pre; /* Prevent line wrapping */
-    word-break: normal; /* Do not break words */
-    margin: 0;
-    overflow: auto; /* Let the container handle scrolling */
-
-}
-
-/* Scrollbar customization for Webkit browsers */
+/* Scrollbar customization for WebKit browsers on .scrollable-content */
 .scrollable-content::-webkit-scrollbar {
-    width: 8px;
-    height: 8px; /* Ensures the horizontal scrollbar is visible */
+    width: 8px;    /* Width of vertical scrollbar */
+    height: 8px;   /* Height of horizontal scrollbar */
 }
 
 .scrollable-content::-webkit-scrollbar-thumb {
@@ -59,13 +57,43 @@ pre {
     background-color: var(--card-background);
 }
 
-/* Scrollbar styling for Firefox */
-.scrollable-content {
+pre {
+    white-space: pre-wrap;
+    word-break: break-all;
+    margin: 0;
+    padding: 1rem;
+    background-color: rgba(0, 0, 0, 0.8);
+    overflow: auto;
+    max-height: 100%;
+    border-radius: 5px;
+    color: var(--text-color);
     scrollbar-width: thin;
     scrollbar-color: var(--primary-color) var(--card-background);
 }
 
-/* Button styling */
+/* Scrollbar customization for WebKit browsers on pre */
+pre::-webkit-scrollbar {
+    width: 8px;    /* Width of vertical scrollbar */
+    height: 8px;   /* Height of horizontal scrollbar */
+}
+
+pre::-webkit-scrollbar-thumb {
+    background-color: var(--primary-color);
+    border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-track {
+    background-color: var(--card-background);
+}
+
+code {
+    display: block;
+    white-space: pre;
+    background-color: rgba(20, 20, 20, 0.9);
+    padding: 1rem;
+    overflow-x: auto;
+}
+
 .modal-content .button {
     padding: 0.5rem 1rem;
     background-color: var(--button-background);
@@ -73,9 +101,75 @@ pre {
     border-radius: 4px;
     font-size: 1rem;
     cursor: pointer;
-    align-self: flex-end; /* Button aligns to the right */
+    align-self: flex-end;
 }
 
 .modal-content .button:hover {
     background-color: var(--button-hover-background);
+}
+
+.modal-content.video-modal {
+    max-width: 90%;
+    max-height: 90%;
+    width: 90%;
+    height: 90%;
+    padding: 0;
+}
+
+.modal-content.video-modal h2 {
+    padding: 1rem 1.5rem;
+    margin: 0;
+}
+
+.modal-content.video-modal .video-container {
+    flex-grow: 1;
+    width: 100%;
+    height: 100%;
+    padding: 0 5rem;
+    box-sizing: border-box;
+}
+
+.modal-content.video-modal .video-container iframe {
+    width: 100%;
+    height: 100%;
+}
+
+.modal-content.video-modal .button {
+    padding: 0.5rem 1rem;
+    margin: 1rem 5rem;
+    background-color: var(--button-background);
+    color: var(--button);
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    align-self: flex-end;
+}
+
+.modal-content.video-modal .button:hover {
+    background-color: var(--button-hover-background);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .modal-content {
+        max-width: 90%;
+        max-height: 85%;
+        padding: 1.5rem;
+    }
+
+    .modal-content.video-modal {
+        max-width: 95%;
+        max-height: 95%;
+        width: 95%;
+        height: 95%;
+    }
+
+    /* Adjust padding in video modal for smaller screens */
+    .modal-content.video-modal .video-container {
+        padding: 0 1.5rem;
+    }
+
+    .modal-content.video-modal .button {
+        margin: 1rem 1.5rem;
+    }
 }
