@@ -32,9 +32,3 @@ Example:
         docker-compose up -d --build
     ```
 
----
-### Kubernetes
-1. **Deploy**
-    ```bash
-      Work in progress...
-     ```
