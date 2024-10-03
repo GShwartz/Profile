@@ -41,8 +41,8 @@ spec:
     app: gil
 
   ports:
-    - port: 8080         # Expose port 8080 externally
-      targetPort: 8080   # Forward traffic to port 8080 in the pod
-      nodePort: 30080    # NodePort for external access
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
 
   type: NodePort

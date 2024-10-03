@@ -56,6 +56,48 @@
   color: var(--text-color-light);
 }
 
+/* Fix button alignment and text centering in project cards */
+.project-card .button-group {
+  display: flex;
+  justify-content: space-between; /* Spread buttons evenly */
+  gap: 0.5rem; /* Ensure smaller gaps for mobile */
+}
+
+.project-card .button-group .button {
+  flex: 1; /* Make the buttons equally spaced */
+  padding: 0.5rem 1rem; /* Adjust padding for better fit */
+  font-size: 0.9rem; /* Slightly reduce the font size */
+  text-align: center; /* Center the text horizontally */
+  display: flex; /* Ensure proper alignment */
+  align-items: center; /* Center text vertically */
+  justify-content: center; /* Center text horizontally */
+  height: auto; /* Make sure the button height is adjusted properly */
+  white-space: nowrap; /* Prevent text wrapping */
+  overflow: hidden; /* Handle overflow for long text */
+  text-overflow: ellipsis; /* Show "..." for overflowed text */
+}
+
+/* Adjust button group layout specifically for cards with a video thumbnail */
+.project-card .video-thumbnail {
+  margin-bottom: 1rem; /* Ensure there is space between the thumbnail and buttons */
+}
+
+.project-card .button-group .button:hover {
+  transform: none; /* Disable hover transform on mobile to prevent layout shifts */
+}
+
+/* Responsive fix for mobile (600px and below) */
+@media (max-width: 600px) {
+  .project-card .button-group {
+    flex-direction: column; /* Stack buttons on top of each other */
+  }
+
+  .project-card .button-group .button {
+    width: 100%; /* Ensure full-width buttons on mobile */
+    margin-bottom: 0.5rem; /* Add spacing between buttons */
+  }
+}
+
 /* Button group styling */
 .button-group {
   display: flex;
@@ -131,16 +173,6 @@
   transform: translate(-50%, -50%) scale(1.1);
 }
 
-/* Adjustments for small screens */
-@media (max-width: 600px) {
-  .button-group {
-    flex-direction: column;
-  }
-
-  .button-group .button {
-    flex: 1 1 100%;
-  }
-}
 
 /* Media Queries for Responsive Grid */
 @media (min-width: 768px) {
