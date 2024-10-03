@@ -2,14 +2,14 @@ const projects = [
     {
       title: 'Profile WebApp',
       description:
-        'Build & Deploy My Profile WebApp using Docker | Docker-Compose | Kubernetes (WIP)',
+        'Build & Deploy My Profile WebApp',
       language: 'React | HTML | CSS',
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Profile',
     },
     {
       title: 'K8s install automation',
-      description: 'Install Kubernetes Master | Agents',
+      description: 'Install Kubernetes Master | Workers',
       language: 'BASH',
       year: '2024',
       githubLink: 'https://github.com/GShwartz/Tools/tree/main/Kubernetes/K8s',

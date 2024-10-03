@@ -10,13 +10,23 @@ RUN npm install -g npm@10.8.3 --no-fund
 
 COPY . .
 
+# Build the app in production mode
 RUN npm run build
 
-# Stage 2: Serve the App with Nginx
-FROM nginx:alpine
+# Stage 2: Use npm to Serve the App in Production Mode
+FROM node:20-slim
 
-COPY --from=build /app/build /usr/share/nginx/html
+WORKDIR /app
 
-EXPOSE 80
+COPY --from=build /app/build /app
 
-CMD ["nginx", "-g", "daemon off;"]
+# Install 'serve' to serve the static files in production
+RUN npm install -g serve
+
+# Install procps for utilities like ps
+RUN apt-get update && apt-get install -y procps curl
+
+EXPOSE 8080
+
+# Serve the app using the 'serve' package
+CMD ["serve", "-s", "/app", "-l", "8080"]
