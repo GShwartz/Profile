@@ -12,7 +12,7 @@ function About() {
         <div className="about-text-wrapper">
           <div className="about-text">
             <p>
-              As a <strong>Junior DevOps Engineer & Tier 3 support</strong> for <span className="omc-group">
+              As a <strong>DevOps Engineer & Tier 3 support</strong> for <span className="omc-group">
                 <a href="https://omc.co.il/omcgroup/" target="_blank" rel="noopener noreferrer">OMC GROUP</a>
               </span>, <br />
               I am focused on building my skills in problem solving, troubleshooting, automating deployments and optimizing systems for efficiency with security best practices always in mind. 

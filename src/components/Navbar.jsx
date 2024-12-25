@@ -63,7 +63,12 @@ function Navbar() {
             </a>
           </li>
           <li>
-            <a href="#contact" className={activeSection === 'contact' ? 'active' : ''}>
+            <a
+              href="https://www.linkedin.com/in/gilshwartz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={activeSection === 'contact' ? 'active' : ''}
+            >
               Contact
             </a>
           </li>
