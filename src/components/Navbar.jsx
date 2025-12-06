@@ -44,7 +44,7 @@ function Navbar() {
         <div className="logo">
           {/* Prevent default and scroll manually on logo click */}
           <a href="#about" onClick={handleLogoClick}>Gil Shwartz</a>
-          <span className="slogan">You define the goal, I make it happen.</span>
+          <span className="slogan">Your Vision is My Mission</span>
         </div>
         <ul className="nav-links">
           <li>
