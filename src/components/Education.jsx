@@ -49,7 +49,7 @@ function Education() {
   return (
     <section id="education" className="education">
       <div className="container">
-        <h2>My Education</h2>
+        <h2>Education</h2>
         <div className="education-grid">
           {educationData.map((edu, index) => (
             <div key={index} className="education-card">

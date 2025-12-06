@@ -5,10 +5,15 @@ trigger:
 
 pool: K8S
 
+variables:
+  - group: 
+      K8s-Pipeline
+
 steps:
 - task: printAllVariables@1
   displayName: 'Print all variables'
 
+<<<<<<< HEAD
 - task: Bash@3
   displayName: 'Install Docker'
   inputs:
@@ -138,16 +143,33 @@ steps:
     script: |
       'docker build -t gil .'
 
+=======
+# Apply Kubernetes manifest
+>>>>>>> dafeb074f23f5779da7fe8ac2db732e533a0f733
 - task: Bash@3
   displayName: 'Run K8S Deployment'
   inputs:
     targetType: 'inline'
     script: |
-      kubectl apply -f k8s_manifest.yml
+      echo "$(SUDO_PASSWORD)" | sudo -S kubectl apply -f Pipelines/k8s_manifest.yml
 
+# Wait for K8S pods to be ready
+- task: Bash@3
+  displayName: 'Wait for Pods to be Ready'
+  inputs:
+    targetType: 'inline'
+    script: |
+      echo "$(SUDO_PASSWORD)" | sudo -S kubectl wait --for=condition=ready pod -l app=gil -n gil-namespace --timeout=300s
+
+# Wait for testing (manual 10-minute delay)
 - task: Bash@3
   displayName: 'Wait for Testing'
   inputs:
     targetType: 'inline'
+<<<<<<< HEAD
     script: | 
       'echo "Waiting for 11 minute to test the container"; sleep 60'
+=======
+    script: |
+      echo "Waiting for 10 minutes to test the container"; sleep 600
+>>>>>>> dafeb074f23f5779da7fe8ac2db732e533a0f733

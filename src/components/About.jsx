@@ -15,10 +15,9 @@ function About() {
               As a DevOps Engineer I am focused on building my skills in problem solving, troubleshooting, 
               automating deployments and optimizing systems for efficiency with security best practices always in mind. 
               <br />
-              I am working with tools like Docker, Elastic, Jenkins CI/CD pipelines and many others to help streamline processes. 
+              I am working with tools like Docker, Elastic, BASH, Python, PowerShell, CI/CD pipelines and many others to help streamline processes. 
               <br />
               I am constantly learning and improving, aiming to grow into more advanced areas of Cloud & On-Premise infrastructure and automation.
-              
             </p>
           </div>
         </div>

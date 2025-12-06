@@ -1,0 +1,48 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: gil
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gil-deployment
+  namespace: gil
+
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gil
+
+  template:
+    metadata:
+      labels:
+        app: gil
+
+    spec:
+      containers:
+        - name: gil
+          image: gilush/profile:latest
+          ports:
+            - containerPort: 8080
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: gil-service
+  namespace: gil
+
+spec:
+  selector:
+    app: gil
+
+  ports:
+    - port: 8080
+      targetPort: 8080
+      nodePort: 30080
+
+  type: NodePort

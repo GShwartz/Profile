@@ -5,13 +5,13 @@ function Navbar() {
   const [activeSection, setActiveSection] = useState('home');
 
   useEffect(() => {
-    const sections = document.querySelectorAll('section'); // Select all sections
+    const sections = document.querySelectorAll('section');
 
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting) {
-            setActiveSection(entry.target.id); // Set the active section ID when it comes into view
+            setActiveSection(entry.target.id);
           }
         });
       },
@@ -63,7 +63,12 @@ function Navbar() {
             </a>
           </li>
           <li>
-            <a href="#contact" className={activeSection === 'contact' ? 'active' : ''}>
+            <a
+              href="https://www.linkedin.com/in/gilshwartz/"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={activeSection === 'contact' ? 'active' : ''}
+            >
               Contact
             </a>
           </li>
