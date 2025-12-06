@@ -12,32 +12,12 @@ import projects from '../data/projectsData';
 Modal.setAppElement('#root');
 
 function Projects() {
-<<<<<<< HEAD
-  const projects = [
-    {
-      title: 'Quick-AD',
-      description: 'An easier, more comfortable way to interact with Active Directory.',
-      language: 'PowerShell',
-      year: '2023',
-      githubLink: 'https://github.com/GShwartz/Quick-AD',
-    },
-    {
-      title: 'Profile WebApp',
-      description: 'Build & Deploy My Profile',
-      language: 'React | HTML | CSS | Docker | CI/CD',
-      year: '2024',
-      githubLink: 'https://github.com/GShwartz/Profile',
-      demoLink: 'https://myprofiledemo.com', // Add your demo link here
-    },
-  ];
-=======
   const [isOpen, setIsOpen] = useState(false);
   const [modalContentType, setModalContentType] = useState('');
   const [modalContent, setModalContent] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  // Helper function to get YouTube embed link
   const getYouTubeEmbedLink = (url) => {
     const regExp =
       /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -47,7 +27,6 @@ function Projects() {
       : null;
   };
 
-  // Helper function to extract YouTube video ID
   const getYouTubeVideoID = (url) => {
     const regExp =
       /^.*(?:youtu\.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
@@ -55,7 +34,6 @@ function Projects() {
     return match && match[1].length >= 11 ? match[1].substring(0, 11) : null;
   };
 
-  // Function to toggle the modal and fetch content if necessary
   const toggleModal = async (contentType, link = null) => {
     setLoading(true);
     setError(null);
@@ -89,13 +67,11 @@ function Projects() {
     setIsOpen(false);
   };
 
-  // Apply Prism.js syntax highlighting for scripts
   useEffect(() => {
     if (isOpen && modalContent && modalContentType === 'script') {
       setTimeout(() => Prism.highlightAll(), 0);
     }
   }, [isOpen, modalContent, modalContentType]);
->>>>>>> dafeb074f23f5779da7fe8ac2db732e533a0f733
 
   return (
     <section id="projects" className="projects">
@@ -108,10 +84,7 @@ function Projects() {
               <h4>{project.language}</h4>
               <h4>{project.year}</h4>
               <p>{project.description}</p>
-<<<<<<< HEAD
-=======
 
-              {/* Video Thumbnail */}
               {project.videoLink && (
                 <div
                   className="video-thumbnail"
@@ -131,20 +104,12 @@ function Projects() {
                     fill="none"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <circle
-                      cx="32"
-                      cy="32"
-                      r="32"
-                      fill="black"
-                      fillOpacity="0.6"
-                    />
+                    <circle cx="32" cy="32" r="32" fill="black" fillOpacity="0.6" />
                     <polygon points="26,20 44,32 26,44" fill="white" />
                   </svg>
                 </div>
               )}
 
-              {/* Button Group */}
->>>>>>> dafeb074f23f5779da7fe8ac2db732e533a0f733
               <div className="button-group">
                 <a
                   href={project.githubLink}
@@ -152,21 +117,9 @@ function Projects() {
                   rel="noopener noreferrer"
                   className="button"
                 >
-<<<<<<< HEAD
-                  View on GitHub
-                </a>
-                {project.demoLink && (
-                  <a
-                    href={project.demoLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="button demo-button"
-                  >
-                    DEMO
-                  </a>
-=======
                   GitHub
                 </a>
+
                 {project.demoLink && (
                   <button
                     onClick={() => toggleModal('script', project.demoLink)}
@@ -174,7 +127,6 @@ function Projects() {
                   >
                     Script
                   </button>
->>>>>>> dafeb074f23f5779da7fe8ac2db732e533a0f733
                 )}
               </div>
             </div>
@@ -182,34 +134,26 @@ function Projects() {
         </div>
       </div>
 
-      {/* Modal for displaying content */}
       <Modal
         isOpen={isOpen}
         onRequestClose={closeModal}
         contentLabel="Content Modal"
-        className={`modal-content ${
-          modalContentType === 'video' ? 'video-modal' : ''
-        }`}
+        className={`modal-content ${modalContentType === 'video' ? 'video-modal' : ''}`}
         overlayClassName="modal-overlay"
       >
-        {modalContentType === 'script' ? (
-          <h2>Bash Script</h2>
-        ) : (
-          <h2>Video Demo</h2>
-        )}
+        {modalContentType === 'script' ? <h2>Bash Script</h2> : <h2>Video Demo</h2>}
+
         {loading ? (
           <p>Loading content...</p>
         ) : error ? (
           <p>Error: {error}</p>
         ) : modalContentType === 'script' ? (
-          // Render script content
           <div className="scrollable-content">
             <pre>
               <code className="language-bash">{modalContent}</code>
             </pre>
           </div>
         ) : modalContentType === 'video' ? (
-          // Render video content
           <div className="video-container">
             <iframe
               src={modalContent}
@@ -219,6 +163,7 @@ function Projects() {
             ></iframe>
           </div>
         ) : null}
+
         <button className="button" onClick={closeModal}>
           Close
         </button>
